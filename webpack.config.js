@@ -4,13 +4,14 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['./frontend/index.jsx'],
+  entry: './frontend/index.jsx',
   optimization: {
     minimizer: [new UglifyJsPlugin()]
   },
   output: {
-    path: path.join(__dirname, 'static/js'),
-    publicPath: '/static/js/'
+    path: path.join(__dirname, '/public'),
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   module: {
     rules: [
