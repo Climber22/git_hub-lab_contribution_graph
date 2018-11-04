@@ -38,6 +38,7 @@
   "dependencies": {
     "moment": "^2.22.2",
     "react": "^16.6.0",
+    "react-calendar-heatmap": "^1.7.0",
     "react-dom": "^16.6.0",
     "semantic-ui-react": "^0.83.0"
   }
