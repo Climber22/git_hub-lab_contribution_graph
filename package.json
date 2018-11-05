@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve-dev": "webpack-dev-server --https --inline --hot --port=8081 --cert --content-base public/ --open-page index.html"
+    "serve-dev": "webpack-dev-server --inline --hot --port=8081  --content-base public/ --open-page index.html"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "react": "^16.6.0",
     "react-calendar-heatmap": "^1.7.0",
     "react-dom": "^16.6.0",
+    "react-tooltip": "^3.9.0",
     "semantic-ui-react": "^0.83.0"
   }
 }
