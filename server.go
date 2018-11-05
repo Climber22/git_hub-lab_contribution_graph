@@ -13,17 +13,17 @@ import (
 
 type AccountInfo struct {
 	Github string `query:"github"`
-	Gitlab string `query:"gitlab"`
+	Gitlab string `query:"gitlab" json:"gitlab"`
 }
 
 type ContributionData struct {
-	Date  string
-	Count int
+	Date  string `json:"date"`
+	Count int    `json:"count"`
 }
 
 type ContributionDataList struct {
-	Github []ContributionData
-	Gitlab []ContributionData
+	Github []ContributionData `json:"github"`
+	Gitlab []ContributionData `json:"gitlab"`
 }
 
 func getContributionDataAtGithub(c *colly.Collector, contributionDataList *ContributionDataList, userName string) {
@@ -79,6 +79,8 @@ func handler(c echo.Context) error {
 
 func main() {
 	e := echo.New()
+
+	e.Use(middleware.CORS())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
