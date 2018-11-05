@@ -1,0 +1,47 @@
+{
+  "name": "git_hub-lab_contribution_graph",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve-dev": "webpack-dev-server --inline --hot --port=8081  --content-base public/ --open-page index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Climber22/git_hub-lab_contribution_graph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Climber22/git_hub-lab_contribution_graph/issues"
+  },
+  "homepage": "https://github.com/Climber22/git_hub-lab_contribution_graph#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.8.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.24.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "moment": "^2.22.2",
+    "react": "^16.6.0",
+    "react-calendar-heatmap": "^1.7.0",
+    "react-dom": "^16.6.0",
+    "react-tooltip": "^3.9.0",
+    "semantic-ui-react": "^0.83.0"
+  }
+}
