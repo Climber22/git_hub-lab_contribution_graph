@@ -9,38 +9,15 @@ import ReactTooltip from 'react-tooltip';
 // styles
 import 'react-calendar-heatmap/dist/styles.css';
 
-const sortByDate = contributionData => {
-  return contributionData.sort((a, b) => new Date(a.date) - new Date(b.date));
-};
-
-const getOldestDate = (github, gitlab) => {
-  const githubOldestDate = new Date(github[0].date);
-  const gitlabOldestDate = new Date(gitlab[0].date);
-  return githubOldestDate < gitlabOldestDate
-    ? githubOldestDate
-    : gitlabOldestDate;
-};
-
-const getLatedtDate = (github, gitlab) => {
-  const githubLatestDate = new Date(github[github.length - 1].date);
-  const gitlabLatestDate = new Date(gitlab[gitlab.length - 1].date);
-  return githubLatestDate > gitlabLatestDate
-    ? githubLatestDate
-    : gitlabLatestDate;
-};
-
 const getMergedContributionData = (github, gitlab) => {
   const mergedData = [];
-  [...github, ...gitlab].forEach(data => {
-    const sameDateDataIndex = mergedData.findIndex(
-      ele => ele.date === data.date
-    );
-
-    sameDateDataIndex !== -1
-      ? (mergedData[sameDateDataIndex].count =
-          mergedData[sameDateDataIndex].count + data.count)
-      : mergedData.push(data);
+  github.forEach((githubData, i) => {
+    mergedData.push({
+      date: githubData.date,
+      count: githubData.count + gitlab[i].count
+    });
   });
+
   return mergedData;
 };
 
@@ -62,18 +39,15 @@ const assignClassByValue = value => {
 };
 
 export default function CalenderHeatmap(props) {
-  const github = sortByDate(props.github);
-  const gitlab = sortByDate(props.gitlab);
-
   return (
     <div>
       <CalendarHeatmap
-        startDate={getOldestDate(github, gitlab)}
-        endDate={getLatedtDate(github, gitlab)}
-        values={getMergedContributionData(github, gitlab)}
+        startDate={props.github[0].date}
+        endDate={props.github[props.github.length - 1].date}
+        values={getMergedContributionData(props.github, props.gitlab)}
         classForValue={value => assignClassByValue(value)}
         tooltipDataAttrs={value => ({
-          'data-tip': `${value.date.slice(0, 10)} has count: ${value.count}`
+          'data-tip': `${value.date} has count: ${value.count}`
         })}
       />
       <ReactTooltip />
