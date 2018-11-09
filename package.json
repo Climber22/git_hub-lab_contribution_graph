@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "canvg": "^1.5.3",
     "moment": "^2.22.2",
     "react": "^16.6.0",
     "react-calendar-heatmap": "^1.7.0",
