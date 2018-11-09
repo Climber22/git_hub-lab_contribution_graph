@@ -7,7 +7,7 @@ import { Form } from 'semantic-ui-react';
 
 export default function AccountNameForm(props) {
   return (
-    <Form onSubmit={props.handleSubmit}>
+    <Form onSubmit={props.handleSubmit} widths="equal" loading={props.loading}>
       <Form.Group>
         <Form.Input
           name="github"
@@ -31,5 +31,6 @@ AccountNameForm.propTypes = {
   handleSubmit: PropTypes.func,
   handleChange: PropTypes.func,
   github: PropTypes.string,
-  gitlab: PropTypes.string
+  gitlab: PropTypes.string,
+  loading: PropTypes.bool
 };

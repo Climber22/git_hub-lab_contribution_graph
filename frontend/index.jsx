@@ -5,6 +5,7 @@ import ReactDom from 'react-dom';
 // components
 import AccountNameForm from './components/AccountNameForm.jsx';
 import CalenderHeatmap from './components/CalenderHeatmap.jsx';
+import ExportButton from './components/ExportButton.jsx';
 
 // others
 import axios from 'axios';
@@ -24,7 +25,8 @@ export default class App extends React.Component {
       contributionDataList: {
         github: defaultContributionDataList,
         gitlab: defaultContributionDataList
-      }
+      },
+      loading: false
     };
   }
 
@@ -48,6 +50,7 @@ export default class App extends React.Component {
   };
 
   handleSubmit = async () => {
+    this.setState({ loading: true });
     const res = await axios.get('http://localhost:8080', {
       params: { ...this.state.accountName }
     });
@@ -62,7 +65,8 @@ export default class App extends React.Component {
           [...this.state.contributionDataList.gitlab],
           res.data.gitlab
         )
-      }
+      },
+      loading: false
     });
   };
 
@@ -80,13 +84,15 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ margin: '0 10vw' }}>
+        <CalenderHeatmap {...this.state.contributionDataList} />
         <AccountNameForm
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
+          loading={this.state.loading}
           {...this.state.accountName}
         />
-        <CalenderHeatmap {...this.state.contributionDataList} />)
+        <ExportButton {...this.state.accountName} />
       </div>
     );
   }
