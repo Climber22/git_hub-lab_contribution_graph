@@ -1,17 +1,16 @@
 // React
 import React from 'react';
 import ReactDom from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // components
-import AccountNameForm from './components/AccountNameForm.jsx';
-import CalenderHeatmap from './components/CalenderHeatmap.jsx';
-import ExportButton from './components/ExportButton.jsx';
+import App from './components/App.jsx';
 
 // others
 import axios from 'axios';
 import moment from 'moment';
 
-export default class App extends React.Component {
+export default class AppRouter extends React.Component {
   constructor(props) {
     super(props);
 
@@ -84,18 +83,11 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: '0 10vw' }}>
-        <CalenderHeatmap {...this.state.contributionDataList} />
-        <AccountNameForm
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          loading={this.state.loading}
-          {...this.state.accountName}
-        />
-        <ExportButton {...this.state.accountName} />
-      </div>
+      <Router>
+        <Route path="/" component={App} />
+      </Router>
     );
   }
 }
 
-ReactDom.render(<App />, document.getElementById('app'));
+ReactDom.render(<AppRouter />, document.getElementById('app'));
