@@ -26,7 +26,11 @@ type ContributionDataList struct {
 	Gitlab []ContributionData `json:"gitlab"`
 }
 
-func getContributionDataAtGithub(c *colly.Collector, contributionDataList *ContributionDataList, userName string) {
+func getContributionDataAtGithub(contributionDataList *ContributionDataList, userName string) {
+	if userName == "" {
+		return
+	}
+	c := colly.NewCollector()
 	c.OnHTML("svg.js-calendar-graph-svg", func(e *colly.HTMLElement) {
 		e.ForEach("rect", func(_ int, rect *colly.HTMLElement) {
 			date := rect.Attr("data-date")
@@ -39,29 +43,34 @@ func getContributionDataAtGithub(c *colly.Collector, contributionDataList *Contr
 	c.Visit("https://github.com/" + userName)
 }
 
-func getContributionDataAtGitlab(c *colly.Collector, contributionDataList *ContributionDataList, userName string) {
+func getContributionDataAtGitlab(contributionDataList *ContributionDataList, userName string) {
+	if userName == "" {
+		return
+	}
 	url := "https://gitlab.com/users/" + userName + "/calendar.json"
-	resp, _ := http.Get(url)
+	resp, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
 	defer resp.Body.Close()
 	byteArray, _ := ioutil.ReadAll(resp.Body)
 	jsonBytes := ([]byte)(byteArray)
 
-	responseJson := make(map[string]int)
-	err := json.Unmarshal(jsonBytes, &responseJson)
+	responseJSON := make(map[string]int)
+	err = json.Unmarshal(jsonBytes, &responseJSON)
 	if err != nil {
 		panic(err)
 	}
 
-	for date, count := range responseJson {
+	for date, count := range responseJSON {
 		contributionData := ContributionData{Date: date, Count: count}
 		contributionDataList.Gitlab = append(contributionDataList.Gitlab, contributionData)
 	}
 }
 
 func (contributionDataList *ContributionDataList) getByAccount(userAccount *AccountInfo) {
-	c := colly.NewCollector()
-	getContributionDataAtGithub(c, contributionDataList, userAccount.Github)
-	getContributionDataAtGitlab(c, contributionDataList, userAccount.Gitlab)
+	getContributionDataAtGithub(contributionDataList, userAccount.Github)
+	getContributionDataAtGitlab(contributionDataList, userAccount.Gitlab)
 }
 
 func handler(c echo.Context) error {
